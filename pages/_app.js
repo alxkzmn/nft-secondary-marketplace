@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
             <a className="mr-6 text-pink-500">My Digital Assets</a>
           </Link>
           <Link href="/creator-dashboard">
-            <a className="mr-6 text-pink-500">Creator D ashboard</a>
+            <a className="mr-6 text-pink-500">Creator Dashboard</a>
           </Link>
         </div>
       </nav>
