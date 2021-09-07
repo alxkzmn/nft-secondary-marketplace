@@ -72,11 +72,7 @@ contract NFTMarket is ReentrancyGuard {
         IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
     }
 
-    function createMarketSale(address nftContract, uint256 itemId)
-        public
-        payable
-        nonReentrant
-    {
+    function createMarketSale(address nftContract, uint256 itemId) public payable nonReentrant {
         uint256 price = idToMarketItem[itemId].price;
         uint256 tokenId = idToMarketItem[itemId].tokenId;
         require(msg.value == price, "Price must match item price");
@@ -131,6 +127,8 @@ contract NFTMarket is ReentrancyGuard {
                 currentIndex++;
             }
         }
+
+        return items;
     }
 
     //TODO replace with Graph
@@ -155,5 +153,7 @@ contract NFTMarket is ReentrancyGuard {
                 currentIndex++;
             }
         }
+
+        return items;
     }
 }

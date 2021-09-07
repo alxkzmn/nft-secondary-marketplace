@@ -22,17 +22,17 @@ describe("NFTMarket", function () {
 
     const auctionPrice = ethers.utils.parseUnits("100", "ether");
 
-    await nft.createToken("ipfs://metadata1");
-    await nft.createToken("ipfs://metadata2");
-
-    await market.createMarketItem(nftContractAddress, 1, auctionPrice, {
-      value: listingPrice,
-    });
-    await market.createMarketItem(nftContractAddress, 2, auctionPrice, {
-      value: listingPrice,
-    });
-
     const [_, buyer] = await ethers.getSigners();
+
+    await nft.connect(buyer).createToken("ipfs://metadata1");
+    await nft.connect(buyer).createToken("ipfs://metadata2");
+
+    await market.connect(buyer).createMarketItem(nftContractAddress, 1, auctionPrice, {
+      value: listingPrice,
+    });
+    await market.connect(buyer).createMarketItem(nftContractAddress, 2, auctionPrice, {
+      value: listingPrice,
+    });
 
     const itemsBefore = await market.fetchMarketItems();
     assert.equal(itemsBefore.length, 2);
@@ -41,5 +41,8 @@ describe("NFTMarket", function () {
 
     const itemsAfter = await market.fetchMarketItems();
     assert.equal(itemsAfter.length, 1);
+
+    const items = await market.connect(buyer).fetchItemsCreated();
+    assert.equal(items.length, 2);
   });
 });
