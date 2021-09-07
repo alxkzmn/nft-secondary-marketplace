@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev && npx hardhat run --network localhost scripts/deploy.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

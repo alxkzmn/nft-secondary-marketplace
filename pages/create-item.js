@@ -8,7 +8,11 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRouter } from "next/dist/client/router";
 import Web3Modal from "web3modal";
 
-const client = ipfsHttpClient({ host: "ipfs.infura.io:5001/api/v0" });
+const client = ipfsHttpClient({
+  host: "ipfs.infura.io:5001/api/v0",
+  port: "5001",
+  protocol: "https",
+});
 
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
 import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
@@ -21,17 +25,13 @@ export default function CreateItem() {
 
   async function onChange(e) {
     const file = e.target.files[0];
-    console.log(file);
     try {
-      console.log("trying");
       const added = await client.add(file, {
         progress: (prog) => console.log(`received: ${prog}`),
       });
-      console.log("added");
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       setFileUrl(url);
     } catch (error) {
-      console.log("error");
       console.error(error);
     }
   }

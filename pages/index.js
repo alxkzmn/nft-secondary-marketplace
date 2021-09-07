@@ -28,14 +28,14 @@ export default function Home() {
     const data = await marketContract.fetchMarketItems();
     const items = await Promise.all(
       data.map(async (i) => {
-        const tokenUri = await tokenContract.tokenUri(i.tokenId);
+        const tokenUri = await tokenContract.tokenURI(i.tokenId);
         const metadata = await axios.get(tokenUri);
         let price = ethers.utils.formatUnits(i.price.toString(), "ether");
         let item = {
           price,
-          tokenId: item.tokenId.toNumber(),
-          seller: item.seller,
-          owner: item.owner,
+          tokenId: i.tokenId.toNumber(),
+          seller: i.seller,
+          owner: i.owner,
           image: metadata.data.image,
           name: metadata.data.name,
           description: metadata.data.description,
